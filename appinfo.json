@@ -1,18 +1,22 @@
 {
-  "uuid": "c6561796-24e9-4e55-9e1e-0d86b379726d",
-  "shortName": "caphone_proto",
-  "longName": "caphone_proto",
-  "companyName": "MakeAwesomeHappen",
-  "versionLabel": "1.0",
-  "sdkVersion": "3",
-  "targetPlatforms": ["aplite", "basalt", "chalk"],
-  "watchapp": {
-    "watchface": false
-  },
-  "appKeys": {
-    "dummy": 0
-  },
-  "resources": {
-    "media": []
-  }
+    "appKeys": {
+        "dummy": 0
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "MakeAwesomeHappen",
+    "longName": "caphone_proto",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "2",
+    "shortName": "caphone_proto",
+    "uuid": "c6561796-24e9-4e55-9e1e-0d86b379726d",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
 }

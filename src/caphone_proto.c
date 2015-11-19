@@ -4,6 +4,8 @@
 static Window *window;
 static TextLayer *text_layer;
 static TextLayer *hour_text, *minute_text, *second_text;
+static TextLayer *acc_text;
+
 
 static GRect current_hour_rect, current_minute_rect, current_second_rect;
 static GRect hour_rect, minute_rect, second_rect;
@@ -49,10 +51,14 @@ static void accel_raw_handler(AccelData *data, uint32_t num_samples)
 			     + data[0].y * data[0].y
 			     + z * z;
   
-  if (1000 < accVecLength){
+  if (3000 < (int)accVecLength){
     changing = true;
     changecount = 0;
   }
+
+  static char buffer[] = "9999";
+  snprintf(buffer, sizeof("9999"), "%d", (int)accVecLength);
+  // text_layer_set_text(acc_text, buffer);
 }
 
 
@@ -123,10 +129,10 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   if(changecount == 1){
     set_hour_state();
     start_animation();
-  }else if(changecount == 5){
+  }else if(changecount == 3){
     set_minute_state();
     start_animation();
-  }else if(changecount == 9){
+  }else if(changecount == 5){
     set_second_state();
     start_animation();
   }else if(10 < changecount){
@@ -176,6 +182,11 @@ static void window_load(Window *window) {
   second_rect = GRect(126, bounds.size.h - 20, 20, 20);
   
   text_layer_set_text(second_text, "23");
+
+  acc_text = text_layer_create(GRect(100, bounds.size.h - 40, 80, 20));
+  text_layer_set_background_color(acc_text, GColorWhite);
+  text_layer_set_text_color(acc_text, GColorBlack);
+  layer_add_child(window_layer, text_layer_get_layer(acc_text));
 
   init_time();
   
