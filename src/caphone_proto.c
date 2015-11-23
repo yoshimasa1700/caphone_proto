@@ -66,7 +66,7 @@ static void accel_raw_handler(AccelData *data, uint32_t num_samples)
 
   double vec_length = accel_sensor_filter(data);
   
-  if (10 < vec_length){
+  if (3 < vec_length){
     changing = true;
     changecount = 0;
   }
@@ -164,26 +164,24 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed){
     changing = false;
   }
 
-  /* if (show_big_font){ */
-  /*   switch(current_selected_item){ */
-  /*   case 0: */
-  /*     display_value(window, hours, 0, true); */
-  /*     break; */
-  /*   case 1: */
-  /*     display_value(window, minutes, 0, true); */
-  /*     break; */
-  /*   case 2: */
-  /*     display_value(window, seconds, 0, true); */
-  /*     break; */
-  /*   default: */
-  /*     break; */
-  /*   } */
-  /* }else{ */
-  /*   unload_digit_image_from_slot(0); */
-  /*   unload_digit_image_from_slot(1); */
-  /* } */
-
-
+  if (show_big_font){
+    switch(current_selected_item){
+    case 0:
+      display_value(window, hours, 0, true);
+      break;
+    case 1:
+      display_value(window, minutes, 0, true);
+      break;
+    case 2:
+      display_value(window, seconds, 0, true);
+      break;
+    default:
+      break;
+    }
+  }else{
+    unload_digit_image_from_slot(0);
+    unload_digit_image_from_slot(1);
+  }
 }
 
 void init_time(){
