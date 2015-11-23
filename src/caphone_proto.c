@@ -232,7 +232,8 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(acc_text));
 
   init_time();
-  
+  accel_data_service_subscribe(1, accel_raw_handler);
+
 }
 
 static void window_unload(Window *window) {
