@@ -1,73 +1,78 @@
 {
-    "appKeys": {
-        "dummy": 0
-    },
-    "capabilities": [
-        ""
-    ],
-    "companyName": "MakeAwesomeHappen",
-    "longName": "caphone_proto",
-    "projectType": "native",
-    "resources": {
-        "media": [
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_0",
-		"file": "digits/0.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_1",
-		"file": "digits/1.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_2",
-		"file": "digits/2.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_3",
-		"file": "digits/3.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_4",
-		"file": "digits/4.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_5",
-		"file": "digits/5.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_6",
-		"file": "digits/6.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_7",
-		"file": "digits/7.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_8",
-		"file": "digits/8.png"
-	    },
-	    {
-		"type": "png",
-		"name": "IMAGE_NUM_9",
-		"file": "digits/9.png"
-	    }
-	]
-    },
-    "sdkVersion": "2",
-    "shortName": "caphone_proto",
-    "uuid": "c6561796-24e9-4e55-9e1e-0d86b379726d",
-    "versionCode": 1,
-    "versionLabel": "1.0",
-    "watchapp": {
-        "watchface": true
-    }
+  "appKeys": {
+    "dummy": 0
+  },
+  "capabilities": [
+    ""
+  ],
+  "companyName": "MakeAwesomeHappen",
+  "longName": "caphone_proto",
+  "projectType": "native",
+  "resources": {
+    "media": [
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_0",
+        "file": "digits/0.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_1",
+        "file": "digits/1.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_2",
+        "file": "digits/2.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_3",
+        "file": "digits/3.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_4",
+        "file": "digits/4.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_5",
+        "file": "digits/5.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_6",
+        "file": "digits/6.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_7",
+        "file": "digits/7.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_8",
+        "file": "digits/8.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_NUM_9",
+        "file": "digits/9.png"
+      }
+    ]
+  },
+  "sdkVersion": "3",
+  "shortName": "caphone_proto",
+  "uuid": "c6561796-24e9-4e55-9e1e-0d86b379726d",
+  "versionCode": 1,
+  "versionLabel": "1.0",
+  "watchapp": {
+    "watchface": true
+  },
+  "targetPlatforms": [
+    "aplite",
+    "basalt",
+    "chalk"
+  ]
 }

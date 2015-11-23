@@ -1,6 +1,8 @@
 #include <pebble.h>
 #include <math.h>
 
+#include "showdigits.h"
+
 static Window *window;
 static TextLayer *text_layer;
 static TextLayer *hour_text, *minute_text, *second_text;
@@ -15,6 +17,9 @@ static GRect bounds;
 bool changing = false;
 int changecount = 0;
 
+bool show_big_font = true;
+int current_selected_item = 1;
+
 char hour[] = "00";
 char minute[] = "00";
 char second[] = "00";
@@ -23,6 +28,8 @@ char second[] = "00";
 void on_animation_stopped(Animation *anim, bool finished, void *context){
   // メモリ解放
   property_animation_destroy((PropertyAnimation*) anim);
+
+  show_big_font = true;
 }
 
 // アニメーションレイヤ
@@ -40,6 +47,11 @@ void animate_layer(Layer *layer, GRect *start, GRect *finish, int duration, int 
   };
   animation_set_handlers((Animation*)anim, handlers, NULL);
 
+  unload_digit_image_from_slot(0);
+  unload_digit_image_from_slot(1);
+
+  show_big_font = false;
+  
   // アニメーション開始
   animation_schedule((Animation*)anim);
 }
@@ -68,15 +80,19 @@ void set_current_state(){
   current_second_rect = second_rect;
 }
 
+static GRect main_rect;
+
 void set_hour_state(){
   set_current_state();
 
-  hour_rect = GRect(0, 0, bounds.size.w, bounds.size.h - 20);
+  hour_rect = main_rect;
   text_layer_set_font(hour_text, fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49));
   minute_rect = GRect(bounds.size.w / 2 - 10, bounds.size.h - 20, 20, 20);
   text_layer_set_font(minute_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   second_rect = GRect(126, bounds.size.h - 20, 20, 20);
   text_layer_set_font(second_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+
+  current_selected_item = 0;
 }
 
 void set_minute_state(){
@@ -84,10 +100,12 @@ void set_minute_state(){
 
   hour_rect = GRect(0, bounds.size.h - 20, 20, 20);
   text_layer_set_font(hour_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
-  minute_rect = GRect(0, 0, bounds.size.w, bounds.size.h - 20);
+  minute_rect = main_rect;
   text_layer_set_font(minute_text, fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49));
   second_rect = GRect(126, bounds.size.h - 20, 20, 20);
   text_layer_set_font(second_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+
+  current_selected_item = 1;
 }
 
 void set_second_state(){
@@ -97,8 +115,10 @@ void set_second_state(){
   text_layer_set_font(hour_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   minute_rect = GRect(bounds.size.w / 2 - 10, bounds.size.h - 20, 20, 20);
   text_layer_set_font(minute_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
-  second_rect = GRect(0, 0, bounds.size.w, bounds.size.h - 20);
+  second_rect = main_rect;
   text_layer_set_font(second_text, fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49));
+
+  current_selected_item = 2;
 }
 
 
@@ -119,6 +139,8 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   text_layer_set_text(second_text, second);
 
   int seconds = tick_time->tm_sec;
+  int minutes = tick_time->tm_min;
+  int hours = tick_time->tm_hour;
 
   if (changing){
     changecount++;
@@ -138,6 +160,26 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   }else if(10 < changecount){
     changing = false;
   }
+
+  if (show_big_font){
+    switch(current_selected_item){
+    case 0:
+      display_value(window, hours, 0, true);
+      break;
+    case 1:
+      display_value(window, minutes, 0, true);
+      break;
+    case 2:
+      display_value(window, seconds, 0, true);
+      break;
+    default:
+      break;
+    }
+  }else{
+    unload_digit_image_from_slot(0);
+    unload_digit_image_from_slot(1);
+  }
+
 
 }
 
@@ -203,6 +245,9 @@ static void init(void) {
     .load = window_load,
     .unload = window_unload,
   });
+  
+  main_rect = GRect(50, 40, 94, 108);
+  
   const bool animated = true;
   window_stack_push(window, animated);
 
