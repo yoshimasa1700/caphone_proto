@@ -1,7 +1,7 @@
 #include <pebble.h>
-#include <math.h>
 
 #include "showdigits.h"
+#include "accsensorfilter.h"
 
 static Window *window;
 static TextLayer *text_layer;
@@ -56,20 +56,23 @@ void animate_layer(Layer *layer, GRect *start, GRect *finish, int duration, int 
   animation_schedule((Animation*)anim);
 }
 
+
 static void accel_raw_handler(AccelData *data, uint32_t num_samples)
 {
-  double z = data[0].z + 980;
-  double accVecLength = data[0].x * data[0].x
-			     + data[0].y * data[0].y
-			     + z * z;
+  /* double z = data[0].z + 980; */
+  /* double accVecLength = data[0].x * data[0].x */
+  /* 			     + data[0].y * data[0].y */
+  /* 			     + z * z; */
+
+  double vec_length = accel_sensor_filter(data);
   
-  if (40000 < (int)accVecLength){
+  if (10 < vec_length){
     changing = true;
     changecount = 0;
   }
 
   static char buffer[] = "9999";
-  snprintf(buffer, sizeof("9999"), "%d", (int)accVecLength);
+  snprintf(buffer, sizeof("9999"), "%d", (int)vec_length);
   // text_layer_set_text(acc_text, buffer);
 }
 
@@ -161,24 +164,24 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed){
     changing = false;
   }
 
-  if (show_big_font){
-    switch(current_selected_item){
-    case 0:
-      display_value(window, hours, 0, true);
-      break;
-    case 1:
-      display_value(window, minutes, 0, true);
-      break;
-    case 2:
-      display_value(window, seconds, 0, true);
-      break;
-    default:
-      break;
-    }
-  }else{
-    unload_digit_image_from_slot(0);
-    unload_digit_image_from_slot(1);
-  }
+  /* if (show_big_font){ */
+  /*   switch(current_selected_item){ */
+  /*   case 0: */
+  /*     display_value(window, hours, 0, true); */
+  /*     break; */
+  /*   case 1: */
+  /*     display_value(window, minutes, 0, true); */
+  /*     break; */
+  /*   case 2: */
+  /*     display_value(window, seconds, 0, true); */
+  /*     break; */
+  /*   default: */
+  /*     break; */
+  /*   } */
+  /* }else{ */
+  /*   unload_digit_image_from_slot(0); */
+  /*   unload_digit_image_from_slot(1); */
+  /* } */
 
 
 }
