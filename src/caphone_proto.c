@@ -63,7 +63,7 @@ static void accel_raw_handler(AccelData *data, uint32_t num_samples)
 			     + data[0].y * data[0].y
 			     + z * z;
   
-  if (3000 < (int)accVecLength){
+  if (40000 < (int)accVecLength){
     changing = true;
     changecount = 0;
   }

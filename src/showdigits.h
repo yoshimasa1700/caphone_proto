@@ -31,7 +31,7 @@ static int s_image_slot_state[TOTAL_IMAGE_SLOTS] = {
 // Each slot is a quarter of the screen.
 static void load_digit_image_into_slot(Window *s_main_window, int slot_number, int digit_value) {
   GRect bounds = layer_get_bounds(window_get_root_layer(s_main_window));
-  GRect tile_bounds = gbitmap_get_bounds(s_images[slot_number]);
+  GRect tile_bounds = GRect(0, 0, 72, 128);// gbitmap_get_bounds(s_images[slot_number]);
 
   s_image_slot_state[slot_number] = digit_value;
   s_images[slot_number] = gbitmap_create_with_resource(IMAGE_RESOURCE_IDS[digit_value]);
