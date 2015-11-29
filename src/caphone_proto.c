@@ -232,8 +232,7 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(acc_text));
 
   init_time();
-  accel_data_service_subscribe(1, accel_raw_handler);
-
+  // accel_data_service_subscribe(1, accel_raw_handler);
 }
 
 static void window_unload(Window *window) {
@@ -255,10 +254,12 @@ static void init(void) {
 
   tick_timer_service_subscribe(SECOND_UNIT, (TickHandler) tick_handler);
   accel_data_service_subscribe(1, accel_raw_handler);
+  accel_service_set_sampling_rate(ACCEL_SAMPLING_10HZ);
 }
 
 static void deinit(void) {
   window_destroy(window);
+  accel_data_service_unsubscribe();
 }
 
 int main(void) {
